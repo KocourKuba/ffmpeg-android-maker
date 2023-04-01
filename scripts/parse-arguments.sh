@@ -12,6 +12,7 @@ SOURCE_TYPE=TAR
 SOURCE_VALUE=6.0
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
+FFMPEG_NONFREE_ENABLED=false
 
 # All FREE libraries that are supported
 SUPPORTED_LIBRARIES_FREE=(
@@ -33,6 +34,11 @@ SUPPORTED_LIBRARIES_FREE=(
 # All GPL libraries that are supported
 SUPPORTED_LIBRARIES_GPL=(
   "libx264"
+)
+
+# All non-free libraries that are supported
+SUPPORTED_LIBRARIES_NONFREE=(
+  "libfdk-aac"
 )
 
 for argument in "$@"; do
@@ -123,8 +129,16 @@ for argument in "$@"; do
   --enable-libxml2 | -libxml)
     EXTERNAL_LIBRARIES+=("libxml2")
     ;; 
+  --enable-libfdk-aac | -fdk-aac)
+    EXTERNAL_LIBRARIES+=("libfdk-aac")
+    FFMPEG_NONFREE_ENABLED=true
+    ;;
   --enable-all-free | -all-free)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_FREE[@]}"
+    ;;
+  --enable-all-nonfree | -all-nonfree)
+    EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_NONFREE[@]}"
+    FFMPEG_NONFREE_ENABLED=true
     ;;
   --enable-all-gpl | -all-gpl)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_GPL[@]}"
@@ -132,8 +146,10 @@ for argument in "$@"; do
     ;;
   --enable-all | -all)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_FREE[@]}"
+    EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_NONFREE[@]}"
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_GPL[@]}"
     FFMPEG_GPL_ENABLED=true
+    FFMPEG_NONFREE_ENABLED=true
     ;;
   *)
     echo "Unknown argument $argument"
