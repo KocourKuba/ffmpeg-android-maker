@@ -27,6 +27,7 @@ SUPPORTED_LIBRARIES_FREE=(
   "libfribidi"
   "mbedtls"
   "libbluray"
+  "libxml2"
 )
 
 # All GPL libraries that are supported
@@ -118,6 +119,9 @@ for argument in "$@"; do
     ;;
   --enable-libbluray | -bluray)
     EXTERNAL_LIBRARIES+=("libbluray")
+    ;; 
+  --enable-libxml2 | -libxml)
+    EXTERNAL_LIBRARIES+=("libxml2")
     ;; 
   --enable-all-free | -all-free)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_FREE[@]}"
