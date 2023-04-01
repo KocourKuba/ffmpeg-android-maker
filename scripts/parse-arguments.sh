@@ -130,6 +130,11 @@ for argument in "$@"; do
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_GPL[@]}"
     FFMPEG_GPL_ENABLED=true
     ;;
+  --enable-all | -all)
+    EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_FREE[@]}"
+    EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_GPL[@]}"
+    FFMPEG_GPL_ENABLED=true
+    ;;
   *)
     echo "Unknown argument $argument"
     ;;
